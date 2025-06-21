@@ -46,22 +46,20 @@ pneuma-whatsapp-bot/
 ### Adding a new Intent
 1. Update intent Classification in `main.py`:
 	- Example, adding a new intent with using a elif statement.
-	- `elif any(keyword in message_lower for keyword in [  
-"hotel", "accommodation", "stay", "overnight"  
-]):  
-return "hotel_bookings", "high"` 
+	- `-   elif any(keyword in message_lower for keyword in [“list”, “of”, “keywords”]):
+return “Intent”, “confidence”` 
 
 2. Add Intent Prompts in `get_pneuma_prompt()`:
 	 - In the prompts dictionary add new key value pair like given below
-	 - `"hotel_bookings": f"""{base_system}
-Focus on: Hotel loyalty programs, point values, status benefits.  
-Include specific examples when possible.
-User question: {user_message}""" `
+	 - `“Intent”: f”””{base_system}
+Focus on: intent, describe the intent here with telling what to focus on.
+User question: {user_message}””” `
 
 3. Testing the new Intent
-	- Add to test.py ` {  
-"intent": "Hotel Bookings",  
-"message": "How do I book hotels with Marriott points?"  
+	- Add in the following format to test.py: 
+	-  `
+“Intent”: “your intent here”,
+“message”: “your test message here”
 } ` 
 
 ### Customisation for responses
@@ -74,9 +72,28 @@ Modify the `base_system` prompt in `get_pneuma_prompt()` to adjust:
 
 ## Limitations
 
-- Cannot access real-time award inventory (would need airline API integration) 
-- Limited to pre-trained FAQ patterns (expansion requires code updates) 
-- No transaction processing capability (compliance considerations) 
-- Responses are AI-generated and should be verified for accuracy
+-   No booking or payment capability
+    
+-   AI-generated responses should be verified by the company once
+    
+-   No ability to contact a human helper yet but easily addable as confidence system is implemented as a template now.
+    
+-   FastAPI handles multiple requests but Gemini API has a rate limit, causing issues for concurrent users
+    
+-   Keyword bases intent classification may need to be replaced by a ML classifier for complex queries
+    
+-   Bot provides only general advice, no personalised advice.
+    
+-   No authentication method or logging.
+
+## Future Enhancements
  
-	
+1.  ML based classification: Replace keyword matching with a ML model
+    
+2.  Context awareness: Conversation memory for the bot
+    
+3.  User personalization: Account linking
+    
+4.  Real Whatsapp integration: Business API integration with webhook validation
+    
+5. Multilingual: Supports multiple languages
