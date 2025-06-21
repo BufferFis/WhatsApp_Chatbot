@@ -13,7 +13,6 @@ class PneumaChat:
         self.chat_history = []
         
     def save_chat_history(self, user_message, bot_response, intent):
-        """Save chat to history file"""
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         with open(CHAT_HISTORY_FILE, "a", encoding="utf-8") as f:
