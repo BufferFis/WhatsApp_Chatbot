@@ -10,7 +10,7 @@ config = load_config()
 app = FastAPI(
     title="Pneuma WhatsApp FAQ Bot", 
     version="0.1",
-    description="Travel rewards chatbot for Pneuma"
+    description="Chatbot for Pneuma"
 )
 
 # Configure Gemini
@@ -34,15 +34,21 @@ def classify_intent(message: str) -> tuple[str, str]:
     # Intent 1: Points Maximization 
     if any(keyword in message_lower for keyword in [
         "maximize", "best value", "worth", "optimize", "sweet spot", 
-        "most out of", "strategic", "credit card points"
+        "most out of", "strategic", "credit card", "transfer ratio",
+        "points transfer", "airline miles", "redemption", "business class",
+        "first class", "economy class", "award booking", "points redemption",
+        "points strategy", "points value", "points worth", "points maximization",
+        "points optimization", "points earning", "points usage", "points strategy",
+        "points transfer ratio", "points earning strategy", "points usage strategy",
     ]):
         return "points_maximization", "high"
     
-    # Intent 2: Student Travel Benefits (replaces Award Availability)
+    # Intent 2: Student Travel Benefits
     elif any(keyword in message_lower for keyword in [
-        "student", "student discount", "extra baggage", "musical instrument",
-        "guitar", "violin", "ukelele", "student fare", "college", "university",
-        "extra luggage", "student id", "school", "education"
+        "student", "student discount", "extra baggage", "student fare", "college", "university",
+        "extra luggage", "student id", "school", "education", "student benefits",
+        "student travel", "student airfare", "student discount airfare",
+        "student travel benefits", "student discounts", "student fares",
     ]):
         return "student_travel_benefits", "high"
     
@@ -60,44 +66,44 @@ def get_pneuma_prompt(intent: str, user_message: str) -> str:
     
     base_system = """You are Pneuma's travel rewards assistant. Help users with travel bookings and maximize their benefits.
 
-Voice & Tone:
-- Plain English, data-backed responses
-- Light wit, never snark
-- No buzzwords like "revolutionize" 
-- Concise but helpful (under 100 words)
-- Focus on actionable advice"""
+    Voice & Tone:
+    - Plain English, data-backed responses
+    - Light wit, never snark
+    - No buzzwords like "revolutionize" 
+    - Concise but helpful (under 100 words)
+    - Focus on actionable advice"""
 
     intent_prompts = {
         "points_maximization": f"""{base_system}
 
-Focus on: Transfer ratios, sweet spot redemptions, strategic timing advice.
-Include specific examples like "Chase points transfer 1:1 to United - 70k points for business class to Europe."
+        Focus on: Transfer ratios, sweet spot redemptions, strategic timing advice.
+        Include specific examples like "Chase points transfer 1:1 to United - 70k points for business class to Europe."
 
-User question: {user_message}""",
+        User question: {user_message}""",
 
         "student_travel_benefits": f"""{base_system}
 
-Focus on: Student discounts, extra baggage allowances, musical instrument policies, student fares.
-Include specific examples from airlines like Emirates (10% off + 10kg extra), Air India (20kg extra), Singapore Airlines (10% discount).
-Mention verification requirements (student ID, enrollment letter).
+        Focus on: Student discounts, extra baggage allowances, student fares.
+        Include specific examples from airlines like Emirates (10% off + 10kg extra), Air India (20kg extra + discounted price), Singapore Airlines (10% discount), Indigo (10Kgs extra + discounted price).
+        Mention verification requirements (student ID, enrollment letter).
 
-User question: {user_message}""",
+        User question: {user_message}""",
 
         "points_transfer": f"""{base_system}
 
-Focus on: Transfer partners, expiration rescue strategies, timing best practices.
-Include specific programs like Aeroplan, Air India when relevant.
+        Focus on: Transfer partners, expiration rescue strategies, timing best practices.
+        Include specific programs like Aeroplan, Air India when relevant.
 
-User question: {user_message}""",
+        User question: {user_message}""",
 
         "general": f"""{base_system}
 
-The user's question isn't clearly about travel rewards. Politely redirect them to your expertise areas:
-1. Points maximization strategies
-2. Student travel benefits and discounts
-3. Points transfers and expiration
+        The user's question isn't clearly about travel rewards. Politely redirect them to your expertise areas:
+        1. Points maximization strategies
+        2. Student travel benefits and discounts
+        3. Points transfers and expiration
 
-User question: {user_message}"""
+        User question: {user_message}"""
     }
     
     return intent_prompts.get(intent, intent_prompts["general"])
@@ -118,20 +124,24 @@ async def get_gemini_response(prompt: str) -> str:
 
 @app.post("/webhook", response_model=BotResponse)
 async def whatsapp_webhook(message: WhatsAppMessage):
-    """Main WhatsApp webhook endpoint"""
-    
-    # Classify intent
     intent, confidence = classify_intent(message.Body)
     
-    # Get Pneuma-specific prompt
-    prompt = get_pneuma_prompt(intent, message.Body)
     
-    # Get Gemini response
-    bot_response = await get_gemini_response(prompt)
+    if confidence == "low":
+        bot_response = """I can help with travel rewards! Please be more specific:
+        
+        1) Points maximization strategies
+        2) Student travel benefits  
+        3) Points transfers & expiration
+        
+        What would you like to know about?"""
+    else:
+        prompt = get_pneuma_prompt(intent, message.Body)
+        bot_response = await get_gemini_response(prompt)
     
     return BotResponse(
         message=bot_response,
-        intent=intent,
+        intent=intent, 
         confidence=confidence
     )
 

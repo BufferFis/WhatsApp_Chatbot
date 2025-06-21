@@ -11,7 +11,7 @@ def load_config():
     api_key = os.getenv('GEMINI_API_KEY')
     
     if not api_key:
-        print("❌ ERROR: GEMINI_API_KEY not found!")
+        print("ERROR: GEMINI_API_KEY not found!")
         print("Please check your .env file or set the environment variable")
         print("Get your key from: https://ai.google.dev/gemini-api/docs/api-key")
         sys.exit(1)

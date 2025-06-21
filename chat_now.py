@@ -4,7 +4,6 @@ import sys
 import os
 from datetime import datetime
 
-# Configuration
 BOT_URL = "http://localhost:8000/webhook"
 HEALTH_URL = "http://localhost:8000/health"
 CHAT_HISTORY_FILE = "pneuma_chat_history.txt"
