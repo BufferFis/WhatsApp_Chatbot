@@ -1,8 +1,0 @@
-
-[2025-06-21 00:13:04] User: Hello
-[2025-06-21 00:13:04] Bot (general): Hello!  I'm Pneuma's travel rewards assistant.  While I can't help with general greetings, I'm happy to assist with maximizing your travel rewards points, finding student travel deals, or advising on points transfers and expiration dates.  Let me know how I can help you in these areas!
-
-[2025-06-21 00:13:19] User: Can I carry a guitar in the airline
-[2025-06-21 00:13:19] Bot (student_travel_benefits): Most airlines allow musical instruments, but policies vary.  Check with your airline (e.g., Emirates, Air India, Singapore Airlines) for specifics.  You might need to pay extra and/or pre-book.  
-
-For student travel, explore student fares and discounts!  Emirates offers 10% off plus 10kg extra baggage; Air India gives 20kg extra; Singapore Airlines offers a 10% discount.  You'll typically need a valid student ID or enrollment letter for verification.
