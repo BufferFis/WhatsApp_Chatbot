@@ -55,7 +55,7 @@ class PneumaChat:
         print("\n" + "="*70)
         print("PNEUMA TRAVEL REWARDS ASSISTANT")
         print("="*70)
-        print("Maximize your points • tudent benefits • Transfer strategies")
+        print("Maximize your points • student benefits • Transfer strategies")
         print("-"*70)
         print("Commands: 'exit'/'quit' to end, 'help' for examples")
         print("="*70)
