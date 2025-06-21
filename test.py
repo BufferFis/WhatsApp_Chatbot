@@ -1,6 +1,4 @@
 import requests
-import json
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -22,11 +20,11 @@ def test_pneuma_bot():
     
     print("Testing Pneuma WhatsApp FAQ Bot v0.1 with Student Benefits\n")
     
-    #
+    
     test_cases = [
         {
             "intent": "Points Maximization",
-            "message": "How can I maximize my Chase Sapphire points for flights to Europe?"
+            "message": "How can I maximize my points for flights to Europe?"
         },
         {
             "intent": "Student Travel Benefits", 
@@ -38,7 +36,7 @@ def test_pneuma_bot():
         },
         {
             "intent": "Points Transfer",
-            "message": "My Amex points expire in 2 months, what should I do?"
+            "message": "My Air India points expire in 2 months, what should I do?"
         },
         {
             "intent": "Off-topic test",
@@ -46,8 +44,8 @@ def test_pneuma_bot():
         }
     ]
     
-    for i, test_case in enumerate(test_cases, 1):
-        print(f"Test {i} - {test_case['intent']}:")
+    for i, test_case in enumerate(test_cases):
+        print(f"Test {i+1} - {test_case['intent']}:")
         print(f"Q: {test_case['message']}")
         
         payload = {
@@ -65,10 +63,10 @@ def test_pneuma_bot():
                 print(f"Response: {result['message']}\n")
                 print("-" * 60 + "\n")
             else:
-                print(f"❌ Error {response.status_code}: {response.text}\n")
+                print(f"Error {response.status_code}: {response.text}\n")
                 
         except requests.exceptions.RequestException as e:
-            print(f"❌ Connection error: {e}\n")
+            print(f"Connection error: {e}\n")
 
 if __name__ == "__main__":
     test_pneuma_bot()

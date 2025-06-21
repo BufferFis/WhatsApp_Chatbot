@@ -21,7 +21,6 @@ class PneumaChat:
             f.write(f"[{timestamp}] Bot ({intent}): {bot_response}\n")
     
     def check_bot_status(self):
-        """Check if bot server is running"""
         try:
             response = requests.get(HEALTH_URL, timeout=5)
             if response.status_code == 200:
@@ -55,9 +54,9 @@ class PneumaChat:
     def print_welcome(self):
         """Print styled welcome message"""
         print("\n" + "="*70)
-        print("🚀 PNEUMA TRAVEL REWARDS ASSISTANT")
+        print("PNEUMA TRAVEL REWARDS ASSISTANT")
         print("="*70)
-        print("💰 Maximize your points • 🎓 Student benefits • Transfer strategies")
+        print("Maximize your points • tudent benefits • Transfer strategies")
         print("-"*70)
         print("Commands: 'exit'/'quit' to end, 'help' for examples")
         print("="*70)
@@ -71,7 +70,7 @@ class PneumaChat:
             "My points expire next month, what should I do?"
         ]
         
-        print("\n💡 Try asking:")
+        print("\ntry asking:")
         for i, example in enumerate(examples, 1):
             print(f"   {i}. {example}")
         print()

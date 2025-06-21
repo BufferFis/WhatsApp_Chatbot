@@ -84,7 +84,7 @@ def get_pneuma_prompt(intent: str, user_message: str) -> str:
         "student_travel_benefits": f"""{base_system}
 
         Focus on: Student discounts, extra baggage allowances, student fares.
-        Include specific examples from airlines like Emirates (10% off + 10kg extra), Air India (20kg extra + discounted price), Singapore Airlines (10% discount), Indigo (10Kgs extra + discounted price).
+        Include specific examples from airlines like Emirates (10% off + 10kg extra), Air India (20kg extra + discounted price), Singapore Airlines (10% discount), Indigo (10Kgs extra + discounted price + musical instrument).
         Mention verification requirements (student ID, enrollment letter).
 
         User question: {user_message}""",
