@@ -1,4 +1,4 @@
-# Pneuma Whatsapp FAQ Bot v0.1
+Whatsapp FAQ Bot v0.1
 
 A prototype chatbot for travel reward queries. Powered by Google's Gemini AI and 
 
